@@ -1,21 +1,27 @@
+import json
+
 rule = input('Выберете правило раздачи вещей (LIFO или FIFO)')
 rule = rule.strip().upper()
 items_list = []
+items_list_2 = []
 while rule:
-    with open("d:/TMS_HW/Lesson 7/data.txt", "a+", encoding='utf-8') as file:
         person_item = input('Что у вас?')
         if person_item:
-            file.write(f"{person_item}\n\n")
-            if rule=='FIFO':
-                items_list.insert(0,person_item)
-                print('Спасибо!')
-            else:
-                items_list.append(person_item)
-                print('Спасибо!')
+            amount_preson_item = input('Сколько')
+            with open("d:/TMS_HW/Lesson 7/data.json", "w", encoding='utf-8') as file:
+                if rule=='FIFO':
+                    items_list.insert(0, {'fork': person_item, 'amount': amount_preson_item})
+                    items_list_2.insert(0, {'fork': person_item, 'amount': amount_preson_item})
+                    print('Спасибо!')
+                else:
+                    items_list.append({'fork': person_item, 'amount': amount_preson_item})
+                    items_list_2.append({'fork': person_item, 'amount': amount_preson_item})
+                    print('Спасибо!')
+                json.dump(items_list, file, ensure_ascii=False)
         else:
-            if len(items_list):
-                avaiable_item=items_list.pop()
-                print('Возьмите, вот вам', avaiable_item)
+            if len(items_list_2):
+                avaiable_item=items_list_2.pop()
+                print('Возьмите, вот вам', avaiable_item['fork'], avaiable_item['amount'], 'шт')
             else:
                 print('Извните но у нас для вас пока ничего нет, попробуйте зайти позже :(')
 else:
