@@ -3,7 +3,7 @@ import sqlite3
 connect = sqlite3.connect('d:/TMS_HW/Lesson 7/donat_items.db')
 cur = connect.cursor()
 cur.execute("""
-CREATE TABLE IF NOT EXISTS items(id INTEGER PRIMARY KEY AUTOINCREMENT,fork, amount, rule);
+CREATE TABLE IF NOT EXISTS items(id INTEGER PRIMARY KEY AUTOINCREMENT,Name, Amount, Stoc DEFAULT Минск_Восточный,TIME datetime DEFAULT CURRENT_TIMESTAMP, Rule);
             """)
 connect.commit()
 
@@ -24,7 +24,7 @@ while rule:
             else:
                 items_list.append({'fork': person_item, 'amount': amount_preson_item})
                 print('Спасибо!')
-            cur.execute("INSERT INTO items (fork,amount,rule) VALUES(?,?,?);", tuple_package_for_db)
+            cur.execute("INSERT INTO items (Name,Amount,Rule) VALUES(?,?,?);", tuple_package_for_db)
             connect.commit()
         else:
             if len(items_list):
